@@ -10,7 +10,8 @@ Periodic removes old images from GitLab container registry in all projects.
 
 - Create access token in your gitlab service.
 - Set required params (BASE_API_URL, ACCESS_TOKEN) in configuration file ```cp ./.env.example ./.env```.
-- 
+- Run from source ```go run main.go clean```
+- Run from docker image ```docker run -e BASE_API_URL=https://gitlab.com/api/v4 -e ACCESS_TOKEN=XXX ataklychev/gitlab-registry-cleaner```
 
 ## Environment variables
 - PRODUCTION=false ( configure log format )
@@ -20,21 +21,13 @@ Periodic removes old images from GitLab container registry in all projects.
 - CRON_TIME=01:11 ( time of day to run clean )
 
 ## Run clean command in docker
-Single clean container registry operation
+Single operation, clean container registry and exit
 ```
-docker run \
---name gitlab-registry-cleaner \
---env-file=./.env \
---env COMMAND_NAME=clean \
-ataklychev/gitlab-registry-cleaner
+docker run -e BASE_API_URL=https://gitlab.com/api/v4 -e ACCESS_TOKEN=XXX ataklychev/gitlab-registry-cleaner
 ```
 
 ## Run cron command in docker
 Run clean container registry operation every day at specified time
 ```
-docker run \
---name gitlab-registry-cleaner-cron \
---env-file=./.env \
---env COMMAND_NAME=cron \
-ataklychev/gitlab-registry-cleaner
+docker run -e BASE_API_URL=https://gitlab.com/api/v4 -e ACCESS_TOKEN=XXX ataklychev/gitlab-registry-cleaner
 ```

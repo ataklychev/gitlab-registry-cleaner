@@ -1,11 +1,10 @@
 FROM golang:1.17.3-alpine
 
 WORKDIR /go/src/app
-COPY ./ .
-
-RUN chmod 755 ./docker/app/entrypoint.sh
+COPY . .
 
 RUN go get -d -v ./...
 RUN go install -v ./...
 
-ENTRYPOINT ["./docker/app/entrypoint.sh"]
+ENTRYPOINT ["gitlab-registry-cleaner"]
+CMD ["clean"]
