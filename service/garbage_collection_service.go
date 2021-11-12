@@ -21,6 +21,7 @@ func NewGarbageCollectionService(
 	if threshold < 1 {
 		threshold = 1
 	}
+	
 	return &GarbageCollectionService{
 		threshold:  threshold,
 		gitlabRepo: gitlabRepo,
