@@ -24,4 +24,5 @@ blocks:
           - 'cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod),vendor-$SEMAPHORE_GIT_BRANCH,vendor-master'
       jobs:
         - name: Test
-          commands: []
+          commands:
+            - go test ./...
