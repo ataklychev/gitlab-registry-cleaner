@@ -9,6 +9,14 @@ import (
 )
 
 func NewGitlabClient(accessToken string, baseAPIURL string) *gitlab.Client {
+	if len(accessToken) == 0 {
+		log.Fatal("Failed create GitLab client, param accessToken is required. Pass env variable ACCESS_TOKEN.")
+	}
+
+	if len(baseAPIURL) == 0 {
+		log.Fatal("Failed create GitLab client, param baseAPIURL is required. Pass env variable BASE_API_URL.")
+	}
+
 	git, err := gitlab.NewClient(accessToken, gitlab.WithBaseURL(baseAPIURL))
 	if nil != err {
 		log.Fatalf("Failed to create gitlab client: %v", err)
