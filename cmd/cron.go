@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"log"
 	"time"
 
 	"github.com/ataklychev/gitlab-registry-cleaner/config"
@@ -19,13 +18,10 @@ var cronCmd = &cobra.Command{
 	Short: "Clean gitlab registry by cron, every day at specific time",
 	Run: func(cmd *cobra.Command, args []string) {
 		// load config
-		config, err := config.LoadConfig()
-		if err != nil {
-			log.Fatal("cannot load config:", err)
-		}
+		config := config.LoadConfig()
 
 		// init logger
-		_logger, _loggerSync := logger.NewLogger(config.Production)
+		_logger, _loggerSync := logger.NewLogger(config.Debug)
 		defer _loggerSync()
 
 		startImmediately := false
@@ -35,7 +31,7 @@ var cronCmd = &cobra.Command{
 		}
 
 		// every day at specific time start garbage collection
-		err = gocron.Every(1).Day().At(config.CronTime).Do(func() {
+		err := gocron.Every(1).Day().At(config.CronTime).Do(func() {
 			gitlabRepo := repository.NewGitlabRepository(repository.NewGitlabClient(config.AccessToken, config.BaseAPIURL), _logger)
 			gc := service.NewGarbageCollectionService(config.Threshold, gitlabRepo, _logger)
 			gc.Run()

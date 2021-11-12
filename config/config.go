@@ -5,18 +5,26 @@ import (
 )
 
 type Config struct {
-	Production  bool   `mapstructure:"PRODUCTION"`
+	Debug       bool   `mapstructure:"DEBUG"`
 	Threshold   int    `mapstructure:"THRESHOLD"`
 	BaseAPIURL  string `mapstructure:"BASE_API_URL"`
 	AccessToken string `mapstructure:"ACCESS_TOKEN"`
 	CronTime    string `mapstructure:"CRON_TIME"`
 }
 
-func LoadConfig() (*Config, error) {
-	config := new(Config)
+func LoadConfig() *Config {
+	defaultThreshold := 3
 
 	viper.AutomaticEnv()
-	err := viper.Unmarshal(config)
+	viper.SetDefault("DEBUG", true)
+	viper.SetDefault("THRESHOLD", defaultThreshold)
+	viper.SetDefault("CRON_TIME", "01:11")
 
-	return config, err
+	return &Config{
+		Debug:       viper.GetBool("DEBUG"),
+		AccessToken: viper.GetString("ACCESS_TOKEN"),
+		BaseAPIURL:  viper.GetString("BASE_API_URL"),
+		Threshold:   viper.GetInt("THRESHOLD"),
+		CronTime:    viper.GetString("CRON_TIME"),
+	}
 }

@@ -1,8 +1,6 @@
 package cmd
 
 import (
-	"log"
-
 	"github.com/ataklychev/gitlab-registry-cleaner/config"
 	"github.com/ataklychev/gitlab-registry-cleaner/logger"
 	"github.com/ataklychev/gitlab-registry-cleaner/repository"
@@ -17,13 +15,10 @@ var cleanCmd = &cobra.Command{
 	Short: "Clean gitlab registry",
 	Run: func(cmd *cobra.Command, args []string) {
 		// load config
-		config, err := config.LoadConfig()
-		if err != nil {
-			log.Fatal("cannot load config:", err)
-		}
+		config := config.LoadConfig()
 
 		// init logger
-		_logger, _loggerSync := logger.NewLogger(config.Production)
+		_logger, _loggerSync := logger.NewLogger(config.Debug)
 		defer _loggerSync()
 
 		// start gc

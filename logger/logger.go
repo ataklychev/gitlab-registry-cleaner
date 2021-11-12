@@ -16,9 +16,9 @@ type Logger interface {
 }
 
 // NewLogger make logger.
-func NewLogger(production bool) (Logger, func() error) {
+func NewLogger(debug bool) (Logger, func() error) {
 	var logger *zap.Logger
-	if production {
+	if !debug {
 		logger, _ = zap.NewProduction()
 	} else {
 		logger, _ = zap.NewDevelopment()
