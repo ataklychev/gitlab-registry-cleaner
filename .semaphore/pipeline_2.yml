@@ -1,0 +1,19 @@
+version: v1.0
+name: Pipeline 2
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Build
+    task:
+      jobs:
+        - name: Build
+          commands:
+            - checkout
+            - echo "$DOCKER_PASSWORD" | docker login  --username "$DOCKER_USERNAME" --password-stdin
+            - 'docker pull $DOCKER_USERNAME/gitlab-registry-cleaner:latest'
+            - 'docker build -f docker/app/Dockerfile --cache-from $DOCKER_USERNAME/gitlab-registry-cleaner:latest -t $DOCKER_USERNAME/gitlab-registry-cleaner:latest .'
+            - 'docker push $DOCKER_USERNAME/gitlab-registry-cleaner:latest'
+      secrets:
+        - name: dockerhub
