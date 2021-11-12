@@ -3,10 +3,10 @@ package cmd
 import (
 	"log"
 
-	"github.com/ataklychev/gitlab_registry_cleaner/config"
-	"github.com/ataklychev/gitlab_registry_cleaner/logger"
-	"github.com/ataklychev/gitlab_registry_cleaner/repository"
-	"github.com/ataklychev/gitlab_registry_cleaner/service"
+	"github.com/ataklychev/gitlab-registry-cleaner/config"
+	"github.com/ataklychev/gitlab-registry-cleaner/logger"
+	"github.com/ataklychev/gitlab-registry-cleaner/repository"
+	"github.com/ataklychev/gitlab-registry-cleaner/service"
 	"github.com/spf13/cobra"
 )
 

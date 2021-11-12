@@ -1,4 +1,4 @@
-module github.com/ataklychev/gitlab_registry_cleaner
+module github.com/ataklychev/gitlab-registry-cleaner
 
 go 1.17
 

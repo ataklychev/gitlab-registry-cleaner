@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/ataklychev/gitlab_registry_cleaner/logger"
+	"github.com/ataklychev/gitlab-registry-cleaner/logger"
 	"github.com/xanzy/go-gitlab"
 )
 
@@ -61,6 +61,7 @@ func (s *GitlabRepository) LoadProjects(ch chan *gitlab.Project) {
 		} else {
 			if len(projects) == 0 {
 				close(ch)
+
 				break
 			} else {
 				for _, project := range projects {
@@ -78,6 +79,7 @@ func (s *GitlabRepository) ListRegistryRepositories(pid int) ([]*gitlab.Registry
 
 	if resp.StatusCode == http.StatusForbidden {
 		s.logger.Infof("Forbidden (%s)", pid)
+
 		return repos, nil
 	}
 

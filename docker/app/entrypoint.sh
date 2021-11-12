@@ -5,4 +5,4 @@ log() {
 }
 
 log "Start ${COMMAND_NAME}"
-gitlab_registry_cleaner ${COMMAND_NAME}
+gitlab-registry-cleaner ${COMMAND_NAME}

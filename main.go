@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/ataklychev/gitlab_registry_cleaner/cmd"
+import "github.com/ataklychev/gitlab-registry-cleaner/cmd"
 
 func main() {
 	cmd.Execute()

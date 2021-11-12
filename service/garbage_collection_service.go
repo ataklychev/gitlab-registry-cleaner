@@ -3,8 +3,8 @@ package service
 import (
 	"sort"
 
-	"github.com/ataklychev/gitlab_registry_cleaner/logger"
-	"github.com/ataklychev/gitlab_registry_cleaner/repository"
+	"github.com/ataklychev/gitlab-registry-cleaner/logger"
+	"github.com/ataklychev/gitlab-registry-cleaner/repository"
 	"github.com/xanzy/go-gitlab"
 )
 
