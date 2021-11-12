@@ -5,6 +5,22 @@ agent:
     type: e1-standard-2
     os_image: ubuntu2004
 blocks:
+  - name: Linting
+    task:
+      jobs:
+          - name: Golangci-lint
+            commands:
+              - golangci-lint run -c ./golangci.yaml
+      prologue:
+        commands:
+          - sem-version go 1.17
+          - checkout
+          - 'cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod),vendor-$SEMAPHORE_GIT_BRANCH,vendor-master'
+          - 'curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.17.3'
+      epilogue:
+        always:
+          commands:
+            - cache save
   - name: Build
     task:
       jobs:

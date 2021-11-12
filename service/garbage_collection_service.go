@@ -17,6 +17,10 @@ func NewGarbageCollectionService(
 	gitlabRepo repository.GitlabRepositoryInterface,
 	logger logger.Logger,
 ) GarbageCollectionServiceInterface {
+	// minimal number of saved images
+	if threshold < 1 {
+		threshold = 1
+	}
 	return &GarbageCollectionService{
 		threshold:  threshold,
 		gitlabRepo: gitlabRepo,
