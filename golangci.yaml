@@ -1,0 +1,286 @@
+run:
+  tests: true
+  issues-exit-code: 10
+  skip-dirs:
+    - build
+    - .git
+  skip-dirs-use-default: true
+  modules-download-mode: mod
+
+linters-settings:
+  cyclop:
+    max-complexity: 6
+
+  dupl:
+    threshold: 100
+
+  errcheck:
+    check-blank: true
+    # list of functions to exclude from checking, where each entry is a single function to exclude.
+    # see https://github.com/kisielk/errcheck#excluding-functions for details
+    exclude-functions:
+      - io/ioutil.ReadFile
+      - io.Copy(*bytes.Buffer)
+      - io.Copy(os.Stdout)
+
+  errorlint:
+    errorf: true
+    asserts: true
+    comparison: true
+
+  exhaustive:
+    check-generated: false
+    default-signifies-exhaustive: false
+
+  funlen:
+    lines: 33
+    statements: 20
+
+  gci:
+
+  gocognit:
+    min-complexity: 10
+
+  nestif:
+    min-complexity: 4
+
+  gocritic:
+    disabled-checks:
+      - regexpMust
+
+  gocyclo:
+    min-complexity: 10
+
+  godot:
+    scope: declarations
+    capital: true
+
+  gofumpt:
+    lang-version: "1.16"
+
+  goimports:
+
+  gomnd:
+    settings:
+      mnd:
+        # the list of enabled checks, see https://github.com/tommy-muehle/go-mnd/#checks for description.
+        checks: argument,case,condition,operation,return,assign
+        ignored-numbers: 2
+
+  gosec:
+    # To select a subset of rules to run.
+    # Available rules: https://github.com/securego/gosec#available-rules
+    includes:
+      - G401
+      - G306
+      - G101
+    # To specify a set of rules to explicitly exclude.
+    # Available rules: https://github.com/securego/gosec#available-rules
+    excludes:
+      - G204
+    # To specify the configuration of rules.
+    # The configuration of rules is not fully documented by gosec:
+    # https://github.com/securego/gosec#configuration
+    # https://github.com/securego/gosec/blob/569328eade2ccbad4ce2d0f21ee158ab5356a5cf/rules/rulelist.go#L60-L102
+    config:
+      G306: "0600"
+      G101:
+        pattern: "(?i)example"
+        ignore_entropy: false
+        entropy_threshold: "80.0"
+        per_char_threshold: "3.0"
+        truncate: "32"
+
+  gosimple:
+    go: "1.16"
+    # https://staticcheck.io/docs/options#checks
+    checks: [ "all" ]
+
+  govet:
+    check-shadowing: true
+
+    # settings per analyzer
+    settings:
+      printf: # analyzer name, run `go tool vet help` to see all analyzers
+        funcs: # run `go tool vet help printf` to see available settings for `printf` analyzer
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
+
+    enable:
+      - atomicalign
+      # - fieldalignment # check structure fields for optimal alignment
+    enable-all: false
+    disable:
+      - shadow
+    disable-all: false
+
+  ifshort:
+    max-decl-lines: 1
+    max-decl-chars: 30
+
+  lll:
+    line-length: 160
+    tab-width: 1
+
+  misspell:
+    locale: US
+
+  nakedret:
+    max-func-lines: 10
+
+  revive:
+    # see https://github.com/mgechev/revive#available-rules for details.
+    ignore-generated-header: true
+    severity: warning
+    rules:
+      - name: indent-error-flow
+        severity: warning
+      - name: add-constant
+        disabled: true
+        severity: warning
+        arguments:
+          - maxLitCount: "3"
+            allowStrs: '""'
+            allowInts: "0,1,2"
+            allowFloats: "0.0,0.,1.0,1.,2.0,2."
+
+  staticcheck:
+    go: "1.16"
+    # https://staticcheck.io/docs/options#checks
+    checks: [ "all" ]
+
+  stylecheck:
+    go: "1.16"
+    # https://staticcheck.io/docs/options#checks
+    checks: [ "all", "-ST1000", "-ST1005" ]
+    # https://staticcheck.io/docs/options#dot_import_whitelist
+    dot-import-whitelist:
+      - fmt
+    # https://staticcheck.io/docs/options#initialisms
+    initialisms: [ "ACL", "API", "ASCII", "CPU", "CSS", "DNS", "EOF", "GUID", "HTML", "HTTP", "HTTPS", "ID", "IP", "JSON", "QPS", "RAM", "RPC", "SLA", "SMTP", "SQL", "SSH", "TCP", "TLS", "TTL", "UDP", "UI", "GID", "UID", "UUID", "URI", "URL", "UTF8", "VM", "XML", "XMPP", "XSRF", "XSS" ]
+    # https://staticcheck.io/docs/options#http_status_code_whitelist
+    http-status-code-whitelist: [ "200", "400", "404", "500" ]
+
+  tagliatelle:
+    case:
+      # use the struct field name to check the name of the struct tag
+      use-field-name: true
+      rules:
+        # any struct tag type can be used.
+        # support string case: `camel`, `pascal`, `kebab`, `snake`, `goCamel`, `goPascal`, `goKebab`, `goSnake`, `upper`, `lower`
+        json: camel
+        yaml: camel
+        xml: camel
+        bson: camel
+        avro: snake
+        mapstructure: kebab
+
+  unparam:
+    # Inspect exported functions, default is false. Set to true if no external program/library imports your code.
+    # XXX: if you enable this setting, unparam will report a lot of false-positives in text editors:
+    # if it's called for subdir of a project it can't find external interfaces. All text editor integrations
+    # with golangci-lint call it on a directory with the changed file.
+    check-exported: false
+
+  unused:
+    go: "1.16"
+
+  whitespace:
+    multi-if: false   # Enforces newlines (or comments) after every multi-line if statement
+    multi-func: false # Enforces newlines (or comments) after every multi-line function signature
+
+  wsl:
+    # See https://github.com/bombsimon/wsl/blob/master/doc/configuration.md
+    allow-assign-and-anything: false
+    allow-assign-and-call: true
+    allow-cuddle-declarations: false
+    allow-multiline-assign: true
+    allow-separated-leading-comment: false
+    allow-trailing-comment: false
+    force-case-trailing-whitespace: 0
+    force-err-cuddling: false
+    force-short-decl-cuddling: false
+    strict-append: true
+
+linters:
+  enable-all: true
+  disable:
+    - prealloc
+    - promlinter
+    - exhaustivestruct
+    - errcheck
+    - wrapcheck
+    - tagliatelle
+    - ifshort
+    - noctx
+    # Deprecated linters
+    - maligned
+    - interfacer
+    - golint
+    - scopelint
+  fast: false
+
+
+issues:
+  # Independently from option `exclude` we use default exclude patterns,
+  # it can be disabled by this option. To list all
+  # excluded by default patterns execute `golangci-lint run --help`.
+  # Default value for this option is true.
+  exclude-use-default: false
+
+  # The default value is false. If set to true exclude and exclude-rules
+  # regular expressions become case sensitive.
+  exclude-case-sensitive: false
+
+  # The list of ids of default excludes to include or disable. By default it's empty.
+  include:
+    - EXC0002 # disable excluding of issues about comments from golint
+
+  # Maximum issues count per one linter. Set to 0 to disable. Default is 50.
+  max-issues-per-linter: 0
+
+  # Maximum count of issues with the same text. Set to 0 to disable. Default is 3.
+  max-same-issues: 0
+
+  # Show only new issues: if there are unstaged changes or untracked files,
+  # only those changes are analyzed, else only changes in HEAD~ are analyzed.
+  # It's a super-useful option for integration of golangci-lint into existing
+  # large codebase. It's not practical to fix all existing issues at the moment
+  # of integration: much better don't allow issues in new code.
+  # Default is false.
+  new: false
+
+  # Fix found issues (if it's supported by the linter)
+  fix: false
+
+  exclude-rules:
+    - linters:
+        - lll
+      source: ".+`.+`$"
+
+severity:
+  # Default value is empty string.
+  # Set the default severity for issues. If severity rules are defined and the issues
+  # do not match or no severity is provided to the rule this will be the default
+  # severity applied. Severities should match the supported severity names of the
+  # selected out format.
+  # - Code climate: https://docs.codeclimate.com/docs/issues#issue-severity
+  # -   Checkstyle: https://checkstyle.sourceforge.io/property_types.html#severity
+  # -       Github: https://help.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
+  default-severity: error
+
+  # The default value is false.
+  # If set to true severity-rules regular expressions become case sensitive.
+  case-sensitive: false
+
+  # Default value is empty list.
+  # When a list of severity rules are provided, severity information will be added to lint
+  # issues. Severity rules have the same filtering capability as exclude rules except you
+  # are allowed to specify one matcher per severity rule.
+  # Only affects out formats that support setting severity information.
+  rules:
+    - linters:
+      - dupl
+      severity: info
