@@ -1,7 +1,7 @@
 FROM golang:1.17
 
 WORKDIR /go/src/app
-COPY ./* ./
+COPY ./ .
 
 RUN chmod 755 ./docker/app/entrypoint.sh
 
