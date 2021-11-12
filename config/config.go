@@ -12,10 +12,9 @@ type Config struct {
 	CronTime    string `mapstructure:"CRON_TIME"`
 }
 
-func LoadConfig(path string) (*Config, error) {
+func LoadConfig() (*Config, error) {
 	config := new(Config)
 
-	viper.SetConfigFile(path)
 	viper.AutomaticEnv()
 
 	err := viper.ReadInConfig()

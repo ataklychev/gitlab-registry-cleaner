@@ -9,7 +9,6 @@ Periodic removes old images from GitLab container registry in all projects.
 ## Install
 
 - Create access token in your gitlab service.
-- Set required params (BASE_API_URL, ACCESS_TOKEN) in configuration file ```cp ./.env.example ./.env```.
 - Run from source ```go run main.go clean```
 - Run from docker image ```docker run -e BASE_API_URL=https://gitlab.com/api/v4 -e ACCESS_TOKEN=XXX ataklychev/gitlab-registry-cleaner```
 

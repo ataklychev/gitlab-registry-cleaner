@@ -19,7 +19,7 @@ var cronCmd = &cobra.Command{
 	Short: "Clean gitlab registry by cron, every day at specific time",
 	Run: func(cmd *cobra.Command, args []string) {
 		// load config
-		config, err := config.LoadConfig(".env")
+		config, err := config.LoadConfig()
 		if err != nil {
 			log.Fatal("cannot load config:", err)
 		}
