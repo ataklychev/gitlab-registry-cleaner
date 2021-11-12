@@ -17,7 +17,7 @@ var cleanCmd = &cobra.Command{
 	Short: "Clean gitlab registry",
 	Run: func(cmd *cobra.Command, args []string) {
 		// load config
-		config, err := config.LoadConfig(".env")
+		config, err := config.LoadConfig()
 		if err != nil {
 			log.Fatal("cannot load config:", err)
 		}
