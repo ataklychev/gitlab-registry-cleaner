@@ -15,3 +15,13 @@ blocks:
             - 'cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod),vendor-$SEMAPHORE_GIT_BRANCH,vendor-master'
             - go mod vendor
             - 'cache store vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod),vendor-$SEMAPHORE_GIT_BRANCH,vendor-master vendor'
+  - name: 'Block #2'
+    task:
+      prologue:
+        commands:
+          - sem-version go 1.17
+          - checkout
+          - 'cache restore vendor-$SEMAPHORE_GIT_BRANCH-$(checksum go.mod),vendor-$SEMAPHORE_GIT_BRANCH,vendor-master'
+      jobs:
+        - name: Test
+          commands: []
